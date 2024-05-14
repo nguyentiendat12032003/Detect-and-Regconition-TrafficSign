@@ -1,18 +1,5 @@
 # ĐỀ CƯƠNG 
 https://docs.google.com/document/d/1wiFmysAprkLWbK6pKzVj8bDaiRU14u0t/edit?usp=sharing&ouid=104188203148634091558&rtpof=true&sd=true
-
-# Tổng quan về YOLO
-Đối với lĩnh vực phát hiện đối tượng, có rất nhiều phương pháp có sẵn, chẳng hạn như sử dụng HOG và mạng nơ ron nhân tạo [1], sử dụng Deep Learning, CNN [7]. Ở đây, chúng tôi sử dụng thuật toán YOLO. Chúng tôi chọn YOLO để giải quyết nhiệm vụ phát hiện và nhận biết biển báo giao thông vì những lý do sau:
-
-**Tốc độ**: Nhìn vào hình 1 chúng ta có thể thấy chính xác sự khác biệt giữa YOLO và các loại khác. YOLO đạt được tốc độ vượt trội nhờ cách tiếp cận hợp lý, tránh các đường ống phức tạp. Nó có thể xử lý hình ảnh với tốc độ nhanh 45 khung hình mỗi giây (FPS). Hơn nữa, YOLO vượt trội hơn các hệ thống thời gian thực khác bằng cách tăng hơn gấp đôi Độ chính xác trung bình (mAP), khiến nó rất phù hợp cho các tác vụ xử lý thời gian thực. Quan sát hình ảnh bên dưới, có thể thấy rõ hiệu suất của YOLO vượt xa các máy dò vật thể khác, đạt con số ấn tượng 91 FPS.
-
-![Ảnh chụp màn hình 2024-05-14 181649](https://github.com/nguyentiendat12032003/NCKH_Traffic_Detect_Adruinocar/assets/111034777/fccea740-279d-4ee5-905b-2d47adfa9338)
-
-**Độ chính xác phát hiện**: YOLO vượt trội đáng kể so với các mô hình tiên tiến khác về độ chính xác phát hiện, cho thấy các lỗi nền tối thiểu.
-
-**Khả năng khái quát hóa tốt**: Với phiên bản mới nhất, YOLO đã tiến một bước bằng cách cung cấp khả năng khái quát hóa được cải thiện cho các miền mới. Cải tiến này tiếp tục củng cố tính phù hợp của nó đối với các ứng dụng phụ thuộc vào khả năng phát hiện đối tượng nhanh và mạnh mẽ.
-
-**Mã nguồn mở**: Quyết định biến YOLO thành nguồn mở đã thúc đẩy cộng đồng không ngừng cải tiến. Nỗ lực hợp tác này đã đóng một vai trò then chốt trong sự phát triển nhanh chóng của YOLO trong một khoảng thời gian tương đối ngắn.
 # YOLO Object Detection
 In the previous section, we presented the structure of YOLO, and in this section, we will discuss how the YOLO algorithm works for detecting and recognizing traffic signs.
 The YOLO algorithm works based on the following steps:
