@@ -5,6 +5,7 @@ https://docs.google.com/document/d/1wiFmysAprkLWbK6pKzVj8bDaiRU14u0t/edit?usp=sh
 Đối với lĩnh vực phát hiện đối tượng, có rất nhiều phương pháp có sẵn, chẳng hạn như sử dụng HOG và mạng nơ ron nhân tạo [1], sử dụng Deep Learning, CNN [7]. Ở đây, chúng tôi sử dụng thuật toán YOLO. Chúng tôi chọn YOLO để giải quyết nhiệm vụ phát hiện và nhận biết biển báo giao thông vì những lý do sau:
 
 **Tốc độ**: Nhìn vào hình 1 chúng ta có thể thấy chính xác sự khác biệt giữa YOLO và các loại khác. YOLO đạt được tốc độ vượt trội nhờ cách tiếp cận hợp lý, tránh các đường ống phức tạp. Nó có thể xử lý hình ảnh với tốc độ nhanh 45 khung hình mỗi giây (FPS). Hơn nữa, YOLO vượt trội hơn các hệ thống thời gian thực khác bằng cách tăng hơn gấp đôi Độ chính xác trung bình (mAP), khiến nó rất phù hợp cho các tác vụ xử lý thời gian thực. Quan sát hình ảnh bên dưới, có thể thấy rõ hiệu suất của YOLO vượt xa các máy dò vật thể khác, đạt con số ấn tượng 91 FPS.
+
 ![Ảnh chụp màn hình 2024-05-14 181649](https://github.com/nguyentiendat12032003/NCKH_Traffic_Detect_Adruinocar/assets/111034777/fccea740-279d-4ee5-905b-2d47adfa9338)
 
 **Độ chính xác phát hiện**: YOLO vượt trội đáng kể so với các mô hình tiên tiến khác về độ chính xác phát hiện, cho thấy các lỗi nền tối thiểu.
@@ -18,6 +19,7 @@ The YOLO algorithm works based on the following steps:
 
 **Residual Blocks**: 
 Để phát hiện và nhận biết biển báo giao thông một cách dễ dàng, thuật toán YOLO chia hình ảnh đầu vào thành một lưới NxN với các ô có kích thước bằng nhau, trong đó N trong trường hợp của chúng tôi là 4 như trong hình bên phải. Mỗi ô trong lưới biểu thị việc định vị và dự đoán lớp đối tượng nằm trong ô cùng với xác suất của từng đối tượng được dự đoán.
+
 ![Ảnh chụp màn hình 2024-05-14 181929](https://github.com/nguyentiendat12032003/NCKH_Traffic_Detect_Adruinocar/assets/111034777/6f862e32-37c8-41a2-ba90-a01d07a1fe49)
 
 **Bounding Box Regression**:
@@ -25,7 +27,9 @@ Giai đoạn tiếp theo liên quan đến việc xác định các hộp giới
 YOLO sử dụng một mô-đun hồi quy duy nhất để xác định các thuộc tính của các hộp giới hạn này, được biểu thị bằng Y theo định dạng sau Y = [pc, bx, by, bh, bw, c1, c2]
 Quá trình này đặc biệt quan trọng trong giai đoạn đào tạo của mô hình.
 Phần tử pc biểu thị điểm xác suất của lưới chứa một đối tượng. Ví dụ: tất cả các lưới được đánh dấu màu đỏ sẽ có điểm xác suất lớn hơn 0 (có ý nghĩa). Hình ảnh bên phải là phiên bản đơn giản hóa, vì xác suất của mỗi ô màu vàng bằng 0 (không đáng kể).
+
 ![Ảnh chụp màn hình 2024-05-14 182046](https://github.com/nguyentiendat12032003/NCKH_Traffic_Detect_Adruinocar/assets/111034777/060393a0-22f1-45a6-ba29-d73b4a3340e6)
+
 **Intersection Over Unions or IOU for short**:
 Các thuật toán phát hiện đối tượng có thể được chia thành hai loại chính: máy dò một lần và máy dò hai giai đoạn. YOLO là máy dò một lần sử dụng mạng thần kinh tích chập hoàn toàn để xử lý hình ảnh. Mục tiêu của IOU (giá trị từ 0 đến 1) là loại bỏ các hộp lưới như vậy để chỉ giữ lại những hộp có liên quan. Đây là logic đằng sau nó:
 Người dùng xác định ngưỡng lựa chọn IOU của mình, ví dụ: có thể là 0,5.
