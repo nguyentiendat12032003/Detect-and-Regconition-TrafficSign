@@ -1,42 +1,163 @@
-# ĐỀ CƯƠNG 
-https://docs.google.com/document/d/1wiFmysAprkLWbK6pKzVj8bDaiRU14u0t/edit?usp=sharing&ouid=104188203148634091558&rtpof=true&sd=true
-# YOLO Object Detection
-In the previous section, we presented the structure of YOLO, and in this section, we will discuss how the YOLO algorithm works for detecting and recognizing traffic signs.
-The YOLO algorithm works based on the following steps:
+# ![Uploading road-sign.png…]() Traffic Sign  Detection using YOLOv8 💡
 
-**Residual Blocks**: 
-Để phát hiện và nhận biết biển báo giao thông một cách dễ dàng, thuật toán YOLO chia hình ảnh đầu vào thành một lưới NxN với các ô có kích thước bằng nhau, trong đó N trong trường hợp của chúng tôi là 4 như trong hình bên phải. Mỗi ô trong lưới biểu thị việc định vị và dự đoán lớp đối tượng nằm trong ô cùng với xác suất của từng đối tượng được dự đoán.
+### Introduction 🌟
 
-![Ảnh chụp màn hình 2024-05-14 181929](https://github.com/nguyentiendat12032003/NCKH_Traffic_Detect_Adruinocar/assets/111034777/6f862e32-37c8-41a2-ba90-a01d07a1fe49)
 
-**Bounding Box Regression**:
-Giai đoạn tiếp theo liên quan đến việc xác định các hộp giới hạn phác thảo tất cả các đối tượng trong ảnh. Số lượng hộp giới hạn có thể khớp với số lượng đối tượng có trong ảnh.
-YOLO sử dụng một mô-đun hồi quy duy nhất để xác định các thuộc tính của các hộp giới hạn này, được biểu thị bằng Y theo định dạng sau Y = [pc, bx, by, bh, bw, c1, c2]
-Quá trình này đặc biệt quan trọng trong giai đoạn đào tạo của mô hình.
-Phần tử pc biểu thị điểm xác suất của lưới chứa một đối tượng. Ví dụ: tất cả các lưới được đánh dấu màu đỏ sẽ có điểm xác suất lớn hơn 0 (có ý nghĩa). Hình ảnh bên phải là phiên bản đơn giản hóa, vì xác suất của mỗi ô màu vàng bằng 0 (không đáng kể).
+Welcome to the fascinating world of helmet detection using the powerful YOLOv8 (You Only Look Once) object detection algorithm! 🚀 In this comprehensive guide, we will walk you through the process of implementing helmet detection with utmost professionalism. YOLOv8, known for its real-time object detection capabilities, will enable you to swiftly identify helmets in images or video streams. 🎯
 
-![Ảnh chụp màn hình 2024-05-14 182046](https://github.com/nguyentiendat12032003/NCKH_Traffic_Detect_Adruinocar/assets/111034777/060393a0-22f1-45a6-ba29-d73b4a3340e6)
+### Prerequisites 📚
 
-**Intersection Over Unions or IOU for short**:
-Các thuật toán phát hiện đối tượng có thể được chia thành hai loại chính: máy dò một lần và máy dò hai giai đoạn. YOLO là máy dò một lần sử dụng mạng thần kinh tích chập hoàn toàn để xử lý hình ảnh. Mục tiêu của IOU (giá trị từ 0 đến 1) là loại bỏ các hộp lưới như vậy để chỉ giữ lại những hộp có liên quan. Đây là logic đằng sau nó:
-Người dùng xác định ngưỡng lựa chọn IOU của mình, ví dụ: có thể là 0,5.
-Sau đó, YOLO tính toán IOU của mỗi ô lưới là Vùng giao nhau chia cho Vùng liên minh.
-Cuối cùng, nó bỏ qua dự đoán về các ô lưới có IOU ≤ threshold và xem xét những ô có IOU > threshold.
-**Non - Maximum Suppression**:
-Chỉ thiết lập ngưỡng cho Giao lộ trên Liên minh (IOU) không phải lúc nào cũng đủ vì một đối tượng có thể tạo ra nhiều hộp có IOU vượt quá ngưỡng. Việc giữ lại tất cả các hộp như vậy có thể gây ra tiếng ồn. Đây là lúc tính năng Ngăn chặn không tối đa (NMS) phát huy tác dụng, cho phép chúng tôi chỉ giữ lại các hộp có điểm xác suất phát hiện cao nhất.
-# Kết quả huấn luyện - Thực nghiệm 
-**Tập dữ liệu**: https://app.roboflow.com/ds/GgJMqMOCK5?key=YeAtuMNV0M
+Before embarking on this exciting journey, make sure you meet the following prerequisites:
+* A system with Python 3.x installed. 🖥️
+* Basic knowledge of Python programming and deep learning concepts. 🐍
+* Familiarity with the YOLO (You Only Look Once) object detection algorithm. 👀
+* Installation of required packages, such as OpenCV, PyTorch, and others. 📦
 
-**Độ chính xác của mô hình là 86.8%**
+```bash
+pip install ultralytics
+```
 
-Precision - Recall Curve của từng lớp 
+Pip install the ultralytics package including
+all [requirements.txt](https://github.com/ultralytics/ultralytics/blob/main/requirements.txt) in a
+[**3.10>=Python>=3.7**](https://www.python.org/) environment, including
+[**PyTorch>=1.7**](https://pytorch.org/get-started/locally/).
 
-![Ảnh chụp màn hình 2024-05-14 182358](https://github.com/nguyentiendat12032003/NCKH_Traffic_Detect_Adruinocar/assets/111034777/a4250110-fdfd-474f-9a27-58324deeacb4)
 
-Confusion Matrix khi test mô hình trên tập dữ liệu test
 
-![Ảnh chụp màn hình 2024-05-14 182727](https://github.com/nguyentiendat12032003/NCKH_Traffic_Detect_Adruinocar/assets/111034777/78d4efa9-6bcc-4693-9d95-a6f5c6a2f7aa)
+### Steps 📝
 
-**Thực nghiệm phát hiện và nhận dạng biển báo giao thông trên ảnh**
+#### 1. Dataset Collection 📂
 
-![Hình ảnh Hình ảnh Hình ảnh Hình ảnh Hình ảnh Hình ảnh](https://github.com/nguyentiendat12032003/NCKH_Traffic_Detect_Adruinocar/assets/111034777/1854479f-02f6-4527-938d-620779e3f2cd)
+To train a stellar YOLOv8 model for helmet detection, you must begin by assembling a captivating dataset. Collect images or videos showcasing individuals wearing helmets, and diligently annotate the bounding boxes around these protective headgears. You can either manually annotate the data or source existing annotated datasets available [Roboflow](https://universe.roboflow.com/bike-helmets/bike-helmet-detection-2vdjo) . 📸
+
+#### 2. Data Preparation 🛠️
+
+Prepare your dataset meticulously by following these steps:
+    Delicately divide the dataset into training, Testing and validation sets. Arrange the data in the YOLO format, ✂️ If you have downloaded dataset from Roboflow it's already divided into yolo     format.which traditionally consists of an image file paired with a corresponding text file containing annotated bounding boxes. 📦
+
+#### 3. Model Training 🚀
+
+To embark on the training journey of your YOLOv8 model, navigate through these essential steps:
+
+* Acquire the YOLOv8 architecture and pre-trained weights from the official repository or a trustworthy source. 🏛️
+* Configure the network architecture and hyperparameters according to your specific requirements. 🧰
+* Initialize your YOLOv8 model with the pre-trained weights, laying the foundation for exceptional performance. 🌟
+* Train the model using your meticulously prepared dataset, optimizing the loss function to hone its detection prowess. ⚙️
+* Stay vigilant during the training process, constantly monitoring progress and adjusting hyperparameters if necessary. 👁️
+* Preserve the trained weights for future inference tasks, ensuring your model's brilliance persists. 💾
+
+#### CLI
+
+YOLOv8 may be used directly in the Command Line Interface (CLI) with a `yolo` command:
+
+```bash
+yolo detect train data=data.yaml model=yolov8n.pt epochs=100 imgsz=640 
+```
+
+
+#### Python
+
+YOLOv8 may also be used directly in a Python environment, and accepts the
+same [arguments](https://docs.ultralytics.com/cfg/) as in the CLI example above:
+
+```python
+from ultralytics import YOLO
+
+# Load a model
+model = YOLO("yolov8n.yaml")  # build a new model from scratch
+model = YOLO("yolov8n.pt")  # load a pretrained model (recommended for training)
+
+# Use the model
+results = model.train(data="data.yaml", epochs=100)  # train the model
+```
+
+[Models](https://github.com/ultralytics/ultralytics/tree/main/ultralytics/models) download automatically from the latest
+Ultralytics [release](https://github.com/ultralytics/assets/releases). See
+YOLOv8 [Python Docs](https://docs.ultralytics.com/python) for more examples.
+
+
+#### 4. Inference 👁️‍🗨️
+
+Once your model is prepared to showcase its talents, follow these enchanting steps for inference:
+
+* Summon the trained YOLOv8 weights, enabling your model to shine. ✨
+* Prepare the input images or video frames with utmost care, setting the stage for a captivating performance. 🖼️
+* Allow the preprocessed data to gracefully pass through the YOLOv8 model, unraveling the mystery of object detection. 🌌
+* Enchant your audience by applying post-processing techniques to filter and refine the detected bounding boxes, unveiling the true beauty of helmet detection. ✨🎩
+* With an artistic touch, visualize the detected helmets by adorning the input images or video frames with elegant bounding boxes. 🎨🖼️
+* Optionally, capture the essence of the moment by preserving the output images or videos, immortalizing the marvels of detected helmets. 📸📹
+  
+<font style="color:green">You can also skip all these steps and use prediction on the weight trained on Roboflow dataset used in this repositoray.</font>
+
+#### CLI
+
+YOLOv8 may be used directly in the Command Line Interface (CLI) with a `yolo` command:
+
+```bash
+yolo predict model=best.pt source="helmet.mp4"
+```
+
+#### Python
+
+```python
+from ultralytics import YOLO
+
+# Load a model
+model = YOLO("best.pt")  # load a pretrained model (recommended for training)
+
+# Use the model
+results = model("helmet.mp4")  # predict on an image
+```
+
+#### 5. Evaluation 📊
+
+To appraise the sheer brilliance of your trained model, embark on this captivating evaluation journey:
+
+* Curate a separate test dataset adorned with annotated ground truth bounding boxes, enabling the stage to be set for a grand performance. 🎭
+* Evoke the trained model's grace by performing inference on the test dataset, unveiling its true potential. 🌟
+* Measure the model's performance through evaluation metrics such as precision, recall, and mean Average Precision (mAP), allowing its magnificence to be quantified. 📈
+* Dive deep into the results, extracting insights, and identifying areas for improvement, paving the way for even more captivating performances. 🔍📈
+
+### Conclusion 🎉
+
+Congratulations on mastering the art of helmet detection using the magical YOLOv8 algorithm! By following these meticulously crafted steps, you have unlocked the ability to train a YOLOv8 model that gracefully identifies helmets in images or video streams. Brace yourself for remarkable applications, such as safety monitoring in construction sites, sports, or industrial environments. Remember, like an artist refining their masterpiece, fine-tune the model and experiment with different hyperparameters to achieve breathtaking performance tailored to your specific use case. Embrace the beauty of helmet detection and continue pushing the boundaries of what is possible! 🌟✨
+
+
+## You can also skip all these steps and use prediction on the weight trained on Roboflow dataset used in this repositoray.</font> 🪖🪖🪖🪖🪖🪖
+
+#### CLI
+
+YOLOv8 may be used directly in the Command Line Interface (CLI) with a `yolo` command:
+
+clone this repository in personal machine 
+```bash
+git clone https://github.com/prince0310/Helmet-Detection-using-YOLOv8.git
+```
+Move into the folder Helmet-Detection-using-YOLOv8
+```bash
+cd Helmet-Detection-using-YOLOv8
+```
+Start prediction on video 
+```bash
+yolo predict model=best.pt source="helmet.mp4"
+```
+
+#### Python
+
+```python
+from ultralytics import YOLO
+
+# Load a model
+model = YOLO("best.pt")  # load a pretrained model (recommended for training)
+
+# Use the model
+results = model("helmet.mp4")  # predict on an image
+```
+Result on predition can be shown 
+
+
+
+https://github.com/prince0310/Helmet-Detection-using-YOLOv8/assets/85225054/848a8219-b3c0-4293-823c-13046415fb79
+
+
+
