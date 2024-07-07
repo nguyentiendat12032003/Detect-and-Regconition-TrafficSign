@@ -1,7 +1,6 @@
-# ![Uploading road-sign.png…]() Traffic Sign  Detection using YOLOv8 💡
+# Traffic Sign Detection using YOLOv8 💡
 
 ### Introduction 🌟
-
 
 Welcome to the fascinating world of helmet detection using the powerful YOLOv8 (You Only Look Once) object detection algorithm! 🚀 In this comprehensive guide, we will walk you through the process of implementing helmet detection with utmost professionalism. YOLOv8, known for its real-time object detection capabilities, will enable you to swiftly identify helmets in images or video streams. 🎯
 
@@ -16,10 +15,11 @@ Before embarking on this exciting journey, make sure you meet the following prer
 ```bash
 pip install ultralytics
 ```
-
+```bash
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+```
 Pip install the ultralytics package including
-all [requirements.txt](https://github.com/ultralytics/ultralytics/blob/main/requirements.txt) in a
-[**3.10>=Python>=3.7**](https://www.python.org/) environment, including
+all [**3.10>=Python>=3.7**](https://www.python.org/) environment, including
 [**PyTorch>=1.7**](https://pytorch.org/get-started/locally/).
 
 
